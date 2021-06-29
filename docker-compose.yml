@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  event-management:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: node:14
+    container_name: event-management
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
