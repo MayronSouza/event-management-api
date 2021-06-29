@@ -1,0 +1,8 @@
+{
+  "name": "event-management-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MayronSouza/event-management-api.git",
+  "author": "MayronSouza <mayron.souza@gmz.solutions>",
+  "license": "MIT"
+}
