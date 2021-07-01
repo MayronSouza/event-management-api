@@ -1,23 +1,26 @@
-import { User } from "../../entities/User";
-import { UserRepository } from "../../repositories/implementations/UserRepository";
+import { IUserReposiroty } from "../../repositories/IUserRepository";
+
+interface IRequest {
+  name: string;
+  email: string;
+  password: string;
+}
 
 class CreateUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: IUserReposiroty) {}
 
-  async execute(data: User): Promise<User> {
-    const userAlreadyExists = await this.userRepository.findByName(data.name);
+  execute({ name, email, password }: IRequest): void {
+    const userAlreadyExits = this.userRepository.findByEmail(email);
 
-    if (userAlreadyExists) {
-      throw new Error("User already exists!");
+    if (userAlreadyExits) {
+      throw new Error('User already exists.')
     }
 
-    const user = new User(data)
-
-    this.userRepository.create(user);
-
-    user.password = '';
-
-    return user;
+    this.userRepository.create({
+      name,
+      email,
+      password,
+    });
   }
 }
 

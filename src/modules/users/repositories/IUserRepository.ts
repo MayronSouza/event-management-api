@@ -7,10 +7,10 @@ interface IUserDTO {
 }
 
 interface IUserReposiroty {
-  create({ name, email, password }: IUserDTO): Promise<User>;
-  list(): Promise<User[]>;
-  findByName(name: string): Promise<User | undefined>;
-  findByEmail(email: string): Promise<User | undefined>;
+  create({ name, email, password }: IUserDTO): Promise<void>;
+  list(): User[];
+  findByName(name: string): User | undefined;
+  findByEmail(email: string): User | undefined;
 }
 
 export { IUserReposiroty, IUserDTO };

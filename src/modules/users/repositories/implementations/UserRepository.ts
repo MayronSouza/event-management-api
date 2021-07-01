@@ -2,32 +2,47 @@ import { User } from "../../entities/User";
 import { IUserReposiroty, IUserDTO } from "../IUserRepository";
 
 class UserRepository implements IUserReposiroty {
-  private users: User[] = [];
+  private users: User[];
 
-  async create({ name, email, password }: IUserDTO): Promise<User> {
-    const user = new User({
+  private static INSTANCE: UserRepository;
+
+  constructor() {
+    this.users = [];
+  }
+
+  public static getInstance(): UserRepository {
+    if(!UserRepository.INSTANCE) {
+      UserRepository.INSTANCE = new UserRepository();
+    }
+
+    return UserRepository.INSTANCE;
+  }
+
+  async create({ name, email, password }: IUserDTO): Promise<void> {
+    const user = new User();
+
+    Object.assign(user, {
       name,
       email,
-      password,
+      password: undefined,
       created_at: new Date(),
       updated_at: new Date(),
     });
 
-    return user;
+    this.users.push(user)
   }
 
-  async list(): Promise<User[]> {
-
+  list(): User[] {
     return this.users;
   }
 
-  async findByName(name: string): Promise<User | undefined> {
+  findByName(name: string): User | undefined {
     const user = this.users.find(user => user.name === name);
 
     return user;
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
+  findByEmail(email: string): User | undefined {
     const user = this.users.find(user => user.email === email);
 
     return user;
