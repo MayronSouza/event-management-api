@@ -1,6 +1,19 @@
 version: '3'
 
 services:
+  database_events:
+    image: postgres
+    container_name: database_events
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker_event
+      - POSTGRES_PASSWORD=events
+      - POSTGRES_DB=event_management
+    volumes:
+      - pgdata:/data/postgres
+
   event-management:
     build:
       context: .
@@ -12,8 +25,11 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    networks:
-      - app-network
-networks:
-  app-network:
-    driver: bridge
+    links:
+      - database_events
+    depends_on:
+      - database_events
+
+volumes:
+  pgdata:
+    driver: local
