@@ -9,8 +9,6 @@ class User {
 
   password: string;
 
-  confirmPassword: string;
-
   created_at: Date;
 
   updated_at: Date;
@@ -19,9 +17,6 @@ class User {
     name,
     email,
     password,
-    confirmPassword,
-    created_at,
-    updated_at,
   }: User) {
     if (!this.id) {
       this.id = uuidV4();
@@ -30,9 +25,8 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.confirmPassword = confirmPassword;
-    this.created_at = created_at;
-    this.updated_at = updated_at;
+    this.created_at = new Date();
+    this.updated_at = new Date();
   }
 }
 
