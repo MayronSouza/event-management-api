@@ -6,10 +6,10 @@ export class CreateUserController {
     private createUserUseCase: CreateUserUseCase,
   ) {}
 
-  handle(req: Request, res: Response): Response {
+  async handle(req: Request, res: Response): Promise<Response> {
     const { name, email, password } = req.body;
 
-    this.createUserUseCase.execute({
+    await this.createUserUseCase.execute({
       name,
       email,
       password,
