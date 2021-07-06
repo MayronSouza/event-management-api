@@ -1,21 +1,17 @@
 import { Router } from 'express';
-import { createUserController } from '../modules/users/useCases/CreateUser';
-import { listUsersController } from '../modules/users/useCases/ListUsers';
+import createUserController from '../modules/users/useCases/CreateUser';
+import listUsersController from '../modules/users/useCases/ListUsers';
 
 const userRouter = Router();
 
 // Rota de listagem de usuários
 userRouter.get('/', (req, res) => {
-  return listUsersController.handle(req, res);
-
-  return res.json();
+  return listUsersController().handle(req, res);
 });
 
 // Rota de criação de um usuário
 userRouter.post('/', (req, res) => {
-  return createUserController.handle(req, res);
-
-  return res.status(201).json();
+  return createUserController().handle(req, res);
 });
 
 export { userRouter };
